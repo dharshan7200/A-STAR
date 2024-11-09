@@ -215,7 +215,7 @@ print(graph)
 aStarAlgo('A', 'J')
 ```
 ## OUTPUT:
-![OUT](Op1-ai4.png)
+![Op1-ai4](https://github.com/user-attachments/assets/1dc04c0e-8feb-4d46-9bec-64897fb0c567)
 
 ## RESULT:
 Thus, the python program to implement A * Search algorithm for a Graph was executed sucessfully.
