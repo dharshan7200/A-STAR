@@ -2,7 +2,7 @@
     <h3>Name: DHARSHAN D </h3>
 <h3>Register Number: 212223230045      </h3>
 <H3>Aim:</H3>
-<p>To ImplementA * Search algorithm for a Graph using Python 3.</p>
+<p>To Implement A * Search algorithm for a Graph using Python 3.</p>
 <H3>Algorithm:</H3>
 
 ``````
@@ -118,109 +118,104 @@ G 0 <br>
 <hr>
 Path found: ['A', 'E', 'D', 'G']
 
-<h2>Program:</h2>
-<hr>
-
-```
-#!/usr/bin/env python
-# coding: utf-8
-
+## PROGRAM:
+```py
 from collections import defaultdict
 
+# Heuristic distances
 H_dist = {}
 
+# A* Algorithm
 def aStarAlgo(start_node, stop_node):
-    open_set = set([start_node])  # Use a set with start_node
+    open_set = set([start_node])
     closed_set = set()
-    g = {}  # store distance from starting node
-    parents = {}  # parents contains an adjacency map of all nodes
-
+    g = {}               # Store distance from starting node
+    parents = {}         # Store parent nodes for path reconstruction
+    
     # Distance of starting node from itself is zero
     g[start_node] = 0
-    # Start node is root node; it has no parent nodes
-    # So start_node is set to its own parent node
+    
+    # Start node is its own parent
     parents[start_node] = start_node
-
+    
     while len(open_set) > 0:
         n = None
-        # Node with the lowest f() is found
+
+        # Find the node with the lowest f(n) = g(n) + h(n)
         for v in open_set:
             if n is None or g[v] + heuristic(v) < g[n] + heuristic(n):
                 n = v
-
-        if n is None:  # If no node found, path does not exist
-            print('Path does not exist!')
-            return None
         
+        if n is None:
+            print("Path does not exist!")
+            return None
+
+        # If the current node is the stop_node, reconstruct the path
         if n == stop_node:
-            # If the current node is the stop_node,
-            # then we begin reconstructing the path from it to the start_node
             path = []
             while parents[n] != n:
                 path.append(n)
                 n = parents[n]
             path.append(start_node)
             path.reverse()
-            print('Path found: {}'.format(path))
+            print(f"Path found: {path}")
             return path
-
-        # Remove n from the open_list and add it to closed_list
-        # because all of its neighbors were inspected
+        
+        # Remove n from open_set, add to closed_set
         open_set.remove(n)
         closed_set.add(n)
-
+        
+        # Process neighbors of n
         for (m, weight) in get_neighbors(n):
-            # Nodes 'm' not in first and last set are added to first
-            # n is set its parent
             if m not in open_set and m not in closed_set:
                 open_set.add(m)
                 parents[m] = n
                 g[m] = g[n] + weight
             else:
                 if g[m] > g[n] + weight:
-                    # Update g(m)
                     g[m] = g[n] + weight
-                    # Change parent of m to n
                     parents[m] = n
-                    # If m in closed set, remove and add to open
                     if m in closed_set:
                         closed_set.remove(m)
                         open_set.add(m)
 
-    print('Path does not exist!')
+    print("Path does not exist!")
     return None
 
-# Define function to return neighbor and its distance from the passed node
+# Get neighbors of a node
 def get_neighbors(v):
-    return graph[v] if v in graph else []  # Return empty list if node has no neighbors
+    return Graph_nodes[v]
 
+# Heuristic function
 def heuristic(n):
-    return H_dist[n] if n in H_dist else float('inf')  # Return heuristic value or inf if not found
+    return H_dist[n]
 
-# Describe your graph here
+# Input graph and heuristic values
 graph = defaultdict(list)
-n, e = map(int, input("Enter number of nodes and edges: ").split())
+n, e = map(int, input().split())
+
+# Input graph edges
 for i in range(e):
-    u, v, cost = map(str, input("Enter edge (u v cost): ").split())
+    u, v, cost = map(str, input().split())
     t = (v, float(cost))
     graph[u].append(t)
     t1 = (u, float(cost))
     graph[v].append(t1)
 
+# Input heuristic values
 for i in range(n):
-    node, h = map(str, input("Enter node and heuristic value: ").split())
+    node, h = map(str, input().split())
     H_dist[node] = float(h)
 
-print("Heuristic Distances:", H_dist)
-print("Graph Structure:", dict(graph))
+print(H_dist)
+Graph_nodes = graph
+print(graph)
 
-# Run the A* algorithm
-start = input("Enter start node: ")
-goal = input("Enter goal node: ")
-aStarAlgo(start, goal)
+# Call the A* algorithm
+aStarAlgo('A', 'J')
 ```
+## OUTPUT:
+![OUT](Op1-ai4.png)
 
-</hr>
-
-<h2>Result:</h2>
-Hence, A * search algorithm is executed successfully.
+## RESULT:
+Thus, the python program to implement A * Search algorithm for a Graph was executed sucessfully.
